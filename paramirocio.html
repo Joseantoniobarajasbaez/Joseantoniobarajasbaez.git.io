@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi prometida?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff; /* Fondo blanco inicialmente */
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Evita el scroll cuando los corazones salen */
+            transition: background-color 1s ease;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .yes-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .yes-btn:hover {
+            background-color: #218838;
+        }
+
+        .no-btn {
+            background-color: #dc3545;
+            color: white;
+            position: relative;
+        }
+
+        .no-btn:hover {
+            background-color: #c82333;
+        }
+
+        /* Crear corazones con CSS */
+        .heart {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff4d6d;
+            transform: rotate(-45deg);
+            animation: floatUp 8s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff4d6d;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -25px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 25px;
+            top: 0;
+        }
+
+        /* Animación personalizada con diferentes velocidades y direcciones aleatorias */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg); /* Girar sobre su propio eje */
+                opacity: 0;
+            }
+        }
+
+        /* Estilos para el mensaje romántico */
+        .message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffebf2; /* Color de fondo suave */
+            color: #000000; /* Texto negro */
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Dancing Script', cursive; /* Fuente romántica */
+            font-size: 48px;
+            text-align: center;
+            display: none; /* Inicialmente oculto */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000; /* Asegura que el mensaje esté encima de otros elementos */
+        }
+
+        /* Estilo del botón "Posdata" */
+        .postscript-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #17a2b8; /* Color azul claro */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+            z-index: 1000; /* Asegura que el botón esté encima de otros elementos */
+        }
+
+        .postscript-btn:hover {
+            background-color: #138496; /* Azul más oscuro */
+        }
+
+        /* Estilos para el mensaje de posdata */
+        .postscript-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ffebf2; /* Color de fondo suave */
+            color: #000000; /* Texto negro */
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Dancing Script', cursive; /* Fuente romántica */
+            font-size: 18px;
+            text-align: center;
+            display: none; /* Inicialmente oculto */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000; /* Asegura que el mensaje esté encima de otros elementos */
+        }
+    </style>
+    <!-- Fuente romántica -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>¿Quieres ser mi prometida?</h1>
+        <div class="buttons">
+            <button class="yes-btn" id="yesBtn">Sí</button>
+            <button class="no-btn" id="noBtn">No</button>
+        </div>
+    </div>
+    <!-- Mensaje romántico -->
+    <div class="message" id="message">Eres el amor de mi vida ❤ y esto no lo digo de broma, ni solo por emoción, por favor quiero que seas tú, ¿Me podrías decir que estamos los dos juntos en esto? TE AMO  ❤</div>
+
+    <!-- Botón Posdata -->
+    <button class="postscript-btn" id="postscriptBtn">Posdata</button>
+
+    <!-- Mensaje de posdata -->
+    <div class="postscript-message" id="postscriptMessage">Tu pedes con todo mi amor, no sé si veas esto antes o después de la entrevista, pero estoy orgulloso de ti, besito</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const body = document.body;
+            const message = document.getElementById('message');
+            const postscriptBtn = document.getElementById('postscriptBtn');
+            const postscriptMessage = document.getElementById('postscriptMessage');
+
+            // Mover el botón "No" al pasar el mouse
+            noBtn.addEventListener('mouseover', function() {
+                const x = Math.random() * (window.innerWidth - noBtn.clientWidth);
+                const y = Math.random() * (window.innerHeight - noBtn.clientHeight);
+                noBtn.style.position = 'absolute';
+                noBtn.style.left = `${x}px`;
+                noBtn.style.top = `${y}px`;
+            });
+
+            // Animación de corazones y cambio de fondo al hacer clic en "Sí"
+            yesBtn.addEventListener('click', function() {
+                message.style.display = 'block'; // Mostrar el mensaje
+                body.style.backgroundColor = '#d6a8e3'; // Cambiar el fondo a un color lila
+
+                // Crear muchos corazones que aparecerán con diferente tiempo y velocidad
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(createHeart, i * 300);  // Los corazones aparecen en diferentes momentos
+                }
+            });
+
+            // Función para crear un corazón
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // Posicionar el corazón de forma aleatoria
+                const x = Math.random() * window.innerWidth;
+                const delay = Math.random() * 3; // Variación en el tiempo de inicio
+                const duration = 5 + Math.random() * 5; // Diferentes velocidades (5 a 10 segundos)
+
+                heart.style.left = `${x}px`;
+                heart.style.top = `${window.innerHeight}px`; // Comienza desde abajo
+                heart.style.animationDuration = `${duration}s`;  // Asigna duración variable
+                heart.style.animationDelay = `${delay}s`;  // Asigna un retraso variable
+                document.body.appendChild(heart);
+
+                // Eliminar el corazón después de la animación
+                setTimeout(() => {
+                    heart.remove();
+                }, (duration + delay) * 1000); // Calcula el tiempo correcto para eliminar el corazón
+            }
+
+            // Mostrar mensaje de posdata al hacer clic en el botón "Posdata"
+            postscriptBtn.addEventListener('click', function() {
+                postscriptMessage.style.display = 'block'; // Mostrar el mensaje de posdata
+            });
+        });
+    </script>
+</body>
+</html>
