@@ -29,13 +29,14 @@
 
         h1 {
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .buttons {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             gap: 20px;
+            align-items: center;
         }
 
         button {
@@ -45,6 +46,8 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 80%;
+            max-width: 300px;
         }
 
         .yes-btn {
@@ -120,7 +123,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             font-family: 'Dancing Script', cursive; /* Fuente romántica */
-            font-size: 48px;
+            font-size: 24px;
             text-align: center;
             display: none; /* Inicialmente oculto */
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -141,6 +144,8 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: background-color 0.3s ease;
             z-index: 1000; /* Asegura que el botón esté encima de otros elementos */
+            width: 80%;
+            max-width: 200px;
         }
 
         .postscript-btn:hover {
@@ -157,11 +162,40 @@
             padding: 20px;
             border-radius: 10px;
             font-family: 'Dancing Script', cursive; /* Fuente romántica */
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
             display: none; /* Inicialmente oculto */
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             z-index: 1000; /* Asegura que el mensaje esté encima de otros elementos */
+            width: 80%;
+            max-width: 300px;
+        }
+
+        /* Consultas de medios para dispositivos móviles */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .message {
+                font-size: 18px;
+                padding: 8px 16px;
+            }
+
+            .postscript-btn {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+
+            .postscript-message {
+                font-size: 14px;
+                padding: 15px;
+            }
         }
     </style>
     <!-- Fuente romántica -->
@@ -182,7 +216,7 @@
     <button class="postscript-btn" id="postscriptBtn">Posdata</button>
 
     <!-- Mensaje de posdata -->
-    <div class="postscript-message" id="postscriptMessage">Tu pedes con todo mi amor, no sé si veas esto antes o después de la entrevista, pero estoy orgulloso de ti, besito</div>
+    <div class="postscript-message" id="postscriptMessage">Tu pedes con todo mi amor, no sé si veas esto antes o después de la entrevista, pero estoy orgulloso de ti, bestio</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -235,9 +269,9 @@
                 }, (duration + delay) * 1000); // Calcula el tiempo correcto para eliminar el corazón
             }
 
-            // Mostrar mensaje de posdata al hacer clic en el botón "Posdata"
+            // Mostrar el mensaje de posdata al hacer clic en el botón
             postscriptBtn.addEventListener('click', function() {
-                postscriptMessage.style.display = 'block'; // Mostrar el mensaje de posdata
+                postscriptMessage.style.display = 'block'; // Mostrar el mensaje
             });
         });
     </script>
